@@ -5,14 +5,14 @@
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/lotgenoot141/kelarottas.git
-cd <your-project-folder>
+git clone https://github.com/Youwes09/Kelarottas-NASA.git
+cd Kelarottas-NASA
 ```
 
 2. **Install dependencies**:
 
 ```bash
-npm install packages.json
+npm install package.json
 ```
 
 3. **Create a `.env` file** in the project root:
