@@ -1,0 +1,172 @@
+[
+	"Apollo15_MetricCam_ClrShade_Global_1024ppd",
+	"Apollo15_MetricCam_ClrConf_Global_1024ppd",
+	"Apollo15_MetricCam_Gray_Global_1024ppd",
+	"Apollo15_MetricCam_Shade_Global_1024ppd",
+	"Apollo15_MetricCam_Prec_Global_1024ppd",
+	"Apollo15_MetricCam_Mosaic_Global_4096ppd",
+	"Apollo15_PanCam_ClrShade_25N311E_5mp",
+	"Apollo15_PanCam_ClrConf_25N311E_5mp",
+	"Apollo15_PanCam_Slope_25N311E_5mp",
+	"Apollo15_PanCam_Conf_25N311E_5mp",
+	"Apollo15_PanCam_Gray_25N311E_5mp",
+	"Apollo15_PanCam_Shade_25N311E_5mp",
+	"Apollo15_PanCam_ClrShade_28N307E_3mp",
+	"Apollo15_PanCam_ClrConf_28N307E_3mp",
+	"Apollo15_PanCam_Slope_28N307E_3mp",
+	"Apollo15_PanCam_Conf_28N307E_3mp",
+	"Apollo15_PanCam_Gray_28N307E_3mp",
+	"Apollo15_PanCam_Shade_28N307E_3mp",
+	"Apollo15_PanCam_ClrShade_19S129E_5mp",
+	"Apollo15_PanCam_ClrConf_19S129E_5mp",
+	"Apollo15_PanCam_Slope_19S129E_5mp",
+	"Apollo15_PanCam_Conf_19S129E_5mp",
+	"Apollo15_PanCam_Gray_19S129E_5mp",
+
+	"Apollo15_PanCam_Shade_19S129E_5mp",
+
+	"Apollo15_PanCam_Mosaic_25N311E_150cmp",
+
+	"Apollo15_PanCam_Mosaic_28N307E_1mp",
+
+	"Apollo15_PanCam_Mosaic_19S129E_2mp",
+
+	"Apollo16_MetricCam_ClrShade_Global_1024ppd",
+
+	"Apollo16_MetricCam_ClrConf_Global_1024ppd",
+
+	"Apollo16_MetricCam_Conf_Global_1024ppd",
+
+	"Apollo16_MetricCam_Gray_Global_1024ppd",
+
+	"Apollo16_MetricCam_Shade_Global_1024ppd",
+
+	"Apollo16_MetricCam_Prec_Global_1024ppd",
+
+	"Apollo16_MetricCam_Mosaic_Global_4096ppd",
+
+	"Apollo17_MetricCam_ClrShade_Global_1024ppd",
+
+	"Apollo17_MetricCam_ClrConf_Global_1024ppd",
+
+	"Apollo17_MetricCam_Conf_Global_1024ppd",
+
+	"Apollo17_MetricCam_Gray_Global_1024ppd",
+
+	"Apollo17_MetricCam_Shade_Global_1024ppd",
+
+	"Apollo17_MetricCam_Prec_Global_1024ppd",
+
+	"Apollo17_MetricCam_Mosaic_Global_3033ppd",
+
+	"ApolloZone_MetricCam_ClrShade_Global_1024ppd",
+
+	"ApolloZone_MetricCam_Conf_Global_1024ppd",
+
+	"ApolloZone_MetricCam_Prec_Global_1024ppd",
+
+	"ApolloZone_MetricCam_Mosaic_Global_3033ppd",
+
+	"ApolloZone_MetricCam_Shade_Global_1024ppd",
+
+	"Clem_UVVIS_FeO_Clr_Global_152ppd",
+
+	"Clem_UVVIS_Mosaic_Global_256ppd_v02",
+
+	"Clem_UVVIS_OpticalMaturity_Gray_Global_152ppd",
+
+	"Clem_UVVIS_TiO2_Clr_Global_152ppd",
+
+	"gggrx_1200a_boug_l1200.eq",
+
+	"gggrx_1200a_boug_l180.eq",
+
+	"gggrx_1200a_boug_l420.eq",
+
+	"gggrx_1200a_boug_l50.eq",
+
+	"gggrx_1200a_boug_l660.eq",
+
+	"gggrx_1200a_boug_l900.eq",
+
+	"Model1_cmi.eq",
+
+	"Model2_cmi.eq",
+
+	"Model3_cmi.eq",
+
+	"Model4_cmi.eq",
+
+	"Model1_thick.eq",
+
+	"Model2_thick.eq",
+
+	"Model3_thick.eq",
+
+	"Model4_thick.eq",
+
+	"gggrx_1200a_geoid_l660.eq",
+
+	"grain_density_310.eq",
+
+	"gggrx_1200a_anom_l1200.eq",
+
+	"gggrx_1200a_anom_l180.eq",
+
+	"gggrx_1200a_anom_l420.eq",
+
+	"gggrx_1200a_anom_l50.eq",
+
+	"gggrx_1200a_anom_l660.eq",
+
+	"gggrx_1200a_anom_l900.eq",
+
+	"gggrx_1200a_anomerr_l1200.eq",
+
+	"gggrx_1200a_anomerr_l180.eq",
+
+	"gggrx_1200a_anomerr_l50.eq",
+
+	"gggrx_1200a_anomerr_l660.eq",
+
+	"gggrx_1200a_anomerr_l900.eq",
+
+	"gggrx_1200a_degstr.eq",
+
+	"gggrx_1200a_dist_l1200.eq",
+
+	"gggrx_1200a_dist_l180.eq",
+
+	"gggrx_1200a_dist_l420.eq",
+
+	"gggrx_1200a_dist_l50.eq",
+
+	"gggrx_1200a_dist_l660.eq",
+
+	"gggrx_1200a_dist_l900.eq",
+
+	"LOLA_PA_310.eq",
+
+	"Kaguya_LGM2011_FreeairGravity_Colorized_Global_mgal3m_20ppd",
+
+	"Kaguya_LGM2011_FreeairGravity_Gray_Global_mgal3m_20ppd",
+
+	"Kaguya_LGM2011_SurfaceGravity_Colorized_Global_mgal3m_20ppd",
+
+	"Kaguya_LGM2011_SurfaceGravity_Gray_Global_mgal3m_20ppd",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_ClinopyroxenePercent_50N50S",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_FeOWeightPercent_50N50S_colorize",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_OlivinePercent_50N50S_colorize",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_OrthopyroxenePercent_50N50S_colorize",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_PlagioclasePercent_50N50S_colorize",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_FeOWeightPercent_50N50S",
+
+	"Lunar_Kaguya_MIMap_MineralDeconv_OpticalMaturityIndex_50N50S_grayscale"
+
+]

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NASA GIBS Explorer - Multi-Planet</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <!-- Inter Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+      background: #121212;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Map container */
+    #map {
+      height: 100vh;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .leaflet-control-zoom {
+      display: none !important;
+    }
+
+    /* Icons */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      user-select: none;
+    }
+
+    /* Top toolbar */
+    .toolbar {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      height: 56px;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Buttons */
+    .btn {
+      background: #4285f4;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: #5294ff;
+      transform: translateY(-1px);
+    }
+    .btn.active {
+      background: #34a853;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 80px;
+      left: 12px;
+      width: 320px;
+      max-height: calc(100vh - 92px);
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      z-index: 900;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .sidebar.hidden {
+      display: none;
+    }
+
+    /* Search box */
+    .search-box {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: sticky;
+      top: 0;
+      background: rgba(30, 30, 30, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: #4285f4;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .search-icon {
+      position: absolute;
+      left: 28px;
+      top: 26px;
+      color: #888;
+      pointer-events: none;
+    }
+
+    /* Show all button */
+    .show-all-btn {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 13px;
+      padding: 8px 12px;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .show-all-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Layer list */
+    .category-section {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .category-header {
+      padding: 14px 20px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .layer-item {
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .layer-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .layer-item.primary {
+      background: rgba(66, 133, 244, 0.2);
+    }
+    .layer-item.secondary {
+      background: rgba(52, 168, 83, 0.2);
+    }
+    .layer-item.hidden {
+      display: none;
+    }
+
+    .layer-info {
+      flex: 1;
+    }
+    .layer-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .layer-category {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .layer-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .layer-badge.primary {
+      background: #4285f4;
+    }
+    .layer-badge.secondary {
+      background: #34a853;
+    }
+
+    .no-results {
+      padding: 40px 20px;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Time control */
+    .time-control {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 520px;
+      max-width: calc(100% - 32px);
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 12px;
+      z-index: 800;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .time-label {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: #e0e0e0;
+    }
+    .time-slider {
+      width: 100%;
+      margin: 8px 0;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    .time-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #4285f4;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .time-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: #4285f4;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    .time-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    /* Comparison controls */
+    .comparison-control {
+      position: fixed;
+      top: 80px;
+      right: 12px;
+      width: 300px;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      z-index: 900;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+    .comparison-control.active {
+      display: block;
+    }
+
+    .opacity-control {
+      margin-top: 16px;
+    }
+    .opacity-slider {
+      width: 100%;
+      margin: 8px 0;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    .opacity-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #34a853;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .opacity-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: #34a853;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .opacity-label {
+      font-size: 13px;
+      color: #aaa;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 28px;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #ccc;
+    }
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #4285f4;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .coord-display {
+      background: rgba(66, 133, 244, 0.1);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #8ab4f8;
+      font-family: 'SF Mono', 'Courier New', monospace;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-btn.primary {
+      background: #4285f4;
+      color: white;
+    }
+    .modal-btn.primary:hover {
+      background: #5294ff;
+    }
+    .modal-btn.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+    .modal-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Leaflet popup styling */
+    .leaflet-popup-content-wrapper {
+      background: #1e1e1e;
+      color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .leaflet-popup-content {
+      margin: 16px;
+      font-size: 14px;
+    }
+    .leaflet-popup-tip {
+      background: #1e1e1e;
+    }
+    .popup-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #e0e0e0;
+    }
+    .popup-description {
+      color: #aaa;
+      font-size: 13px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Top toolbar -->
+  <div class="toolbar">
+    <strong style="font-weight: 600;">NASA GIBS Explorer</strong>
+    <button class="btn" id="toggleSidebar">
+      <span class="material-symbols-outlined">layers</span>
+      Layers
+    </button>
+    <button class="btn" id="toggleCompare">
+      <span class="material-symbols-outlined">compare</span>
+      Compare
+    </button>
+    <span style="margin-left: auto; font-size: 13px; color: #aaa; font-weight: 500;" id="modeIndicator">Single Layer</span>
+  </div>
+
+  <!-- Layer sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="search-box">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search layers..." />
+      <button class="btn show-all-btn" id="showAllBtn">
+        <span class="material-symbols-outlined">expand_more</span>
+        Show All Categories
+      </button>
+    </div>
+    <div id="layerList"></div>
+  </div>
+
+  <!-- Comparison controls -->
+  <div class="comparison-control" id="comparisonControl">
+    <div style="margin-bottom: 16px; font-weight: 600; font-size: 15px;">Comparison Controls</div>
+    <div class="opacity-control">
+      <span class="opacity-label">Top Layer Opacity: <span id="opacityValue">100%</span></span>
+      <input type="range" class="opacity-slider" id="opacitySlider" min="0" max="100" value="100" />
+    </div>
+    <button class="btn" id="swapLayers" style="width: 100%; margin-top: 16px; justify-content: center;">
+      <span class="material-symbols-outlined">swap_vert</span>
+      Swap Layers
+    </button>
+    <button class="btn" id="exitCompare" style="width: 100%; margin-top: 10px; background: #ea4335; justify-content: center;">
+      <span class="material-symbols-outlined">close</span>
+      Exit Compare
+    </button>
+  </div>
+
+  <!-- Time control -->
+  <div class="time-control" id="timeControl">
+    <div class="time-label" id="timeLabel">Loading...</div>
+    <input type="range" class="time-slider" id="timeSlider" min="0" max="30" value="0" />
+    <div class="time-buttons">
+      <button class="btn" id="prevDay">
+        <span class="material-symbols-outlined">chevron_left</span>
+        Previous
+      </button>
+      <button class="btn" id="today">
+        <span class="material-symbols-outlined">today</span>
+        Today
+      </button>
+      <button class="btn" id="nextDay">
+        Next
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Label modal -->
+  <div class="modal" id="labelModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span class="material-symbols-outlined">location_on</span>
+          <span>Add Label</span>
+        </div>
+        <button class="close-btn" id="closeModal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form id="labelForm">
+        <div class="form-group">
+          <label class="form-label">Coordinates</label>
+          <div class="coord-display" id="coordDisplay">0.0000, 0.0000</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="labelTitle" placeholder="Enter label title" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description (optional)</label>
+          <textarea class="form-textarea" id="labelDescription" placeholder="Add a description"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="modal-btn secondary" id="cancelLabel">Cancel</button>
+          <button type="submit" class="modal-btn primary" id="saveLabel">Save Label</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Application state
+    let map, tileLayer, compareTileLayer;
+    let currentCategory = null;
+    let currentLayerId = null;
+    let compareCategory = null;
+    let compareLayerId = null;
+    let currentDate = new Date();
+    let compareMode = false;
+    let apiConfig = {};
+    let pendingLabel = null;
+    let showAllCategories = false;
+
+    // Date range: last 30 days
+    const maxDate = new Date();
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() - 30);
+
+    // Initialize the application
+    async function init() {
+      const response = await fetch('/api/config');
+      apiConfig = await response.json();
+
+      // Set initial layer (first featured category)
+      const featuredCat = Object.entries(apiConfig.categories).find(([k, v]) => v.featured);
+      if (featuredCat) {
+        currentCategory = featuredCat[0];
+        const firstLayer = Object.keys(featuredCat[1].layers)[0];
+        currentLayerId = firstLayer;
+      }
+
+      // Initialize map
+      map = L.map('map', {
+        center: [20, 0],
+        zoom: 2,
+        minZoom: 1,
+        maxZoom: 9,
+        zoomControl: false
+      });
+
+      loadLayer();
+      updateTimeUI();
+      renderLayerList();
+      loadLabels();
+      attachEventListeners();
+    }
+
+    // Attach all event listeners
+    function attachEventListeners() {
+      document.getElementById('toggleSidebar').onclick = () =>
+        document.getElementById('sidebar').classList.toggle('hidden');
+      
+      document.getElementById('toggleCompare').onclick = toggleCompareMode;
+      document.getElementById('exitCompare').onclick = exitCompareMode;
+      document.getElementById('swapLayers').onclick = swapLayers;
+
+      document.getElementById('opacitySlider').oninput = (e) => {
+        const opacity = e.target.value / 100;
+        document.getElementById('opacityValue').textContent = e.target.value + '%';
+        if (compareTileLayer) compareTileLayer.setOpacity(opacity);
+      };
+
+      var lastValue = 30;
+      document.getElementById('timeSlider').oninput = (e) => {
+        
+        var currentValue = parseInt(e.target.value);
+        const daysAgo = currentValue - lastValue;
+        currentDate.setDate(currentDate.getDate() + daysAgo);
+        lastValue = currentValue;
+
+        loadLayer();
+        updateTimeLabel();
+        updateButtons();
+      };
+
+      document.getElementById('prevDay').onclick = () => changeDate(-1);
+      document.getElementById('nextDay').onclick = () => changeDate(1);
+      document.getElementById('today').onclick = () => {
+        currentDate = new Date();
+        loadLayer();
+        updateTimeUI();
+      };
+
+      document.getElementById('searchInput').oninput = (e) => {
+        filterLayers(e.target.value);
+      };
+
+      document.getElementById('showAllBtn').onclick = () => {
+        showAllCategories = !showAllCategories;
+        const btn = document.getElementById('showAllBtn');
+        if (showAllCategories) {
+          btn.innerHTML = '<span class="material-symbols-outlined">expand_less</span> Show Featured Only';
+        } else {
+          btn.innerHTML = '<span class="material-symbols-outlined">expand_more</span> Show All Categories';
+        }
+        renderLayerList();
+      };
+
+      // Labeling
+      map.on('contextmenu', openLabelModal);
+      document.getElementById('closeModal').onclick = closeLabelModal;
+      document.getElementById('cancelLabel').onclick = closeLabelModal;
+      document.getElementById('labelForm').onsubmit = saveLabel;
+    }
+
+    // Filter layers by search query
+    function filterLayers(query) {
+      const searchTerm = query.toLowerCase().trim();
+      const layerItems = document.querySelectorAll('.layer-item');
+      const categoryHeaders = document.querySelectorAll('.category-section');
+      let hasResults = false;
+
+      if (!searchTerm) {
+        layerItems.forEach(item => item.classList.remove('hidden'));
+        categoryHeaders.forEach(header => header.style.display = 'block');
+        document.getElementById('noResults')?.remove();
+        return;
+      }
+
+      layerItems.forEach(item => {
+        const layerName = item.dataset.name.toLowerCase();
+        const categoryName = item.dataset.category.toLowerCase();
+        const matches = layerName.includes(searchTerm) || categoryName.includes(searchTerm);
+        
+        if (matches) {
+          item.classList.remove('hidden');
+          hasResults = true;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      categoryHeaders.forEach(section => {
+        const visibleItems = section.querySelectorAll('.layer-item:not(.hidden)');
+        section.style.display = visibleItems.length > 0 ? 'block' : 'none';
+      });
+
+      const existingMsg = document.getElementById('noResults');
+      if (!hasResults && !existingMsg) {
+        const noResults = document.createElement('div');
+        noResults.id = 'noResults';
+        noResults.className = 'no-results';
+        noResults.textContent = 'No layers found';
+        document.getElementById('layerList').appendChild(noResults);
+      } else if (hasResults && existingMsg) {
+        existingMsg.remove();
+      }
+    }
+
+    // Render layer list in sidebar
+    function renderLayerList() {
+      const layerList = document.getElementById('layerList');
+      layerList.innerHTML = '';
+      
+      Object.entries(apiConfig.categories).forEach(([catKey, catData]) => {
+        if (!showAllCategories && !catData.featured) return;
+        
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.textContent = catData.name;
+        section.appendChild(header);
+
+        Object.entries(catData.layers).forEach(([layerKey, layerData]) => {
+          const div = document.createElement('div');
+          div.className = 'layer-item';
+          div.dataset.category = catKey;
+          div.dataset.layer = layerKey;
+          div.dataset.name = layerData.name;
+          
+          if (catKey === currentCategory && layerKey === currentLayerId) {
+            div.classList.add('primary');
+          }
+          if (catKey === compareCategory && layerKey === compareLayerId) {
+            div.classList.add('secondary');
+          }
+          
+          div.innerHTML = `
+            <div class="layer-info">
+              <div class="layer-name">${layerData.name}</div>
+              <div class="layer-category">${catData.name}</div>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              ${(catKey === currentCategory && layerKey === currentLayerId) ? '<span class="layer-badge primary">1</span>' : ''}
+              ${(catKey === compareCategory && layerKey === compareLayerId) ? '<span class="layer-badge secondary">2</span>' : ''}
+            </div>
+          `;
+          
+          div.onclick = () => selectLayer(catKey, layerKey);
+          section.appendChild(div);
+        });
+
+        layerList.appendChild(section);
+      });
+    }
+
+    // Handle layer selection
+    function selectLayer(category, layerId) {
+      if (!compareMode) {
+        currentCategory = category;
+        currentLayerId = layerId;
+        currentDate = new Date();
+        loadLayer();
+        updateTimeUI();
+      } else {
+        if (category === currentCategory && layerId === currentLayerId) return;
+        if (category === compareCategory && layerId === compareLayerId) {
+          swapLayers();
+        } else {
+          compareCategory = category;
+          compareLayerId = layerId;
+          loadLayer();
+        }
+      }
+      renderLayerList();
+    }
+
+    // Load tile layer(s) based on current state
+    function loadLayer() {
+      if (tileLayer) map.removeLayer(tileLayer);
+      if (compareTileLayer) map.removeLayer(compareTileLayer);
+
+      const layer = apiConfig.categories[currentCategory].layers[currentLayerId];
+      const dateStr = layer.supportsTime ? currentDate.toISOString().split('T')[0] : 'none';
+      const url = `/tiles/${currentCategory}/${currentLayerId}/${dateStr}/{z}/{y}/{x}`;
+
+      tileLayer = L.tileLayer(url, {
+        attribution: 'NASA GIBS',
+        maxZoom: layer.maxZoom,
+        errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+      }).addTo(map);
+
+      map.setMaxZoom(layer.maxZoom);
+
+      if (compareMode && compareCategory && compareLayerId) {
+        const compareLayer = apiConfig.categories[compareCategory].layers[compareLayerId];
+        const compareDateStr = compareLayer.supportsTime ? currentDate.toISOString().split('T')[0] : 'none';
+        const compareUrl = `/tiles/${compareCategory}/${compareLayerId}/${compareDateStr}/{z}/{y}/{x}`;
+        const opacity = document.getElementById('opacitySlider').value / 100;
+        
+        compareTileLayer = L.tileLayer(compareUrl, {
+          attribution: 'NASA GIBS',
+          maxZoom: compareLayer.maxZoom,
+          opacity: opacity,
+          errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+        }).addTo(map);
+      }
+    }
+
+    // Toggle comparison mode
+    function toggleCompareMode() {
+      compareMode = !compareMode;
+      const btn = document.getElementById('toggleCompare');
+      const indicator = document.getElementById('modeIndicator');
+      const compControl = document.getElementById('comparisonControl');
+      
+      if (compareMode) {
+        btn.classList.add('active');
+        indicator.textContent = 'Compare Mode';
+        compControl.classList.add('active');
+        
+        // Auto-select a different layer for comparison
+        const allCats = Object.keys(apiConfig.categories);
+        const differentCat = allCats.find(k => k !== currentCategory);
+        if (differentCat) {
+          compareCategory = differentCat;
+          const firstLayer = Object.keys(apiConfig.categories[differentCat].layers)[0];
+          compareLayerId = firstLayer;
+        }
+        loadLayer();
+      } else {
+        exitCompareMode();
+      }
+      
+      renderLayerList();
+    }
+
+    // Exit comparison mode
+    function exitCompareMode() {
+      compareMode = false;
+      compareCategory = null;
+      compareLayerId = null;
+      
+      document.getElementById('toggleCompare').classList.remove('active');
+      document.getElementById('modeIndicator').textContent = 'Single Layer';
+      document.getElementById('comparisonControl').classList.remove('active');
+      
+      if (compareTileLayer) {
+        map.removeLayer(compareTileLayer);
+        compareTileLayer = null;
+      }
+      
+      renderLayerList();
+    }
+
+    // Swap primary and comparison layers
+    function swapLayers() {
+      if (!compareMode || !compareCategory || !compareLayerId) return;
+      [currentCategory, currentLayerId, compareCategory, compareLayerId] = 
+        [compareCategory, compareLayerId, currentCategory, currentLayerId];
+      loadLayer();
+      renderLayerList();
+    }
+
+    // Update time UI elements
+    function updateTimeUI() {
+      updateTimeLabel();
+      updateSlider();
+      updateButtons();
+    }
+
+    function updateTimeLabel() {
+      document.getElementById('timeLabel').textContent = 
+        currentDate.toLocaleDateString('en-US', { 
+          weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+        });
+    }
+
+    function updateSlider() {
+      const daysAgo = Math.floor((maxDate - currentDate) / (24 * 60 * 60 * 1000));
+      const sliderValue = 30 - Math.max(0, Math.min(30, daysAgo));
+      document.getElementById('timeSlider').value = sliderValue;
+    }
+
+    function updateButtons() {
+      document.getElementById('prevDay').disabled = currentDate <= minDate;
+      document.getElementById('nextDay').disabled = currentDate >= maxDate;
+    }
+
+    // Change date by N days
+    function changeDate(days) {
+      const newDate = new Date(currentDate);
+      newDate.setDate(newDate.getDate() + days);
+      if (newDate > maxDate) currentDate = new Date(maxDate);
+      else if (newDate < minDate) currentDate = new Date(minDate);
+      else currentDate = newDate;
+      loadLayer();
+      updateTimeUI();
+    }
+
+    // Labeling functions
+    function openLabelModal(e) {
+      pendingLabel = { lat: e.latlng.lat, lng: e.latlng.lng };
+      
+      document.getElementById('labelTitle').value = '';
+      document.getElementById('labelDescription').value = '';
+      document.getElementById('coordDisplay').textContent = 
+        `${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+      
+      document.getElementById('labelModal').classList.add('active');
+    }
+
+    function closeLabelModal() {
+      pendingLabel = null;
+      document.getElementById('labelModal').classList.remove('active');
+    }
+
+    function saveLabel(e) {
+      e.preventDefault();
+      
+      if (!pendingLabel) return;
+      
+      const title = document.getElementById('labelTitle').value.trim();
+      const description = document.getElementById('labelDescription').value.trim();
+      
+      if (!title) return;
+      
+      fetch('/api/labels', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          lat: pendingLabel.lat, 
+          lng: pendingLabel.lng, 
+          title, 
+          description 
+        })
+      })
+      .then(() => {
+        const marker = L.marker([pendingLabel.lat, pendingLabel.lng]).addTo(map);
+        marker.bindPopup(`
+          <div class="popup-title">${title}</div>
+          ${description ? `<div class="popup-description">${description}</div>` : ''}
+        `);
+        closeLabelModal();
+      })
+      .catch(err => {
+        console.error('Error saving label:', err);
+        alert('Failed to save label');
+      });
+    }
+
+    function loadLabels() {
+      fetch('/api/labels')
+        .then(res => res.json())
+        .then(labels => {
+          if (!Array.isArray(labels)) {
+            console.error('Labels is not an array:', labels);
+            return;
+          }
+          labels.forEach(label => {
+            const marker = L.marker([label.lat, label.lng]).addTo(map);
+            marker.bindPopup(`
+              <div class="popup-title">${label.title}</div>
+              ${label.description ? `<div class="popup-description">${label.description}</div>` : ''}
+            `);
+          });
+        })
+        .catch(err => {
+          console.error('Error loading labels:', err);
+        });
+    }
+
+    // Start the app
+    init();
+  </script>
+</body>
+</html>

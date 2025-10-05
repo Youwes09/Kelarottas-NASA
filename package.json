@@ -1,0 +1,21 @@
+{
+  "name": "nasa-modus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "fast-fuzzy": "^1.12.0",
+    "node-fetch": "^3.3.2",
+    "package.json": "^2.0.1"
+  }
+}

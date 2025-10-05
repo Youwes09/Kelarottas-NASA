@@ -1,0 +1,100 @@
+{
+  "categories": {
+    "earth_featured": {
+      "name": "Featured Earth",
+      "featured": true,
+      "needsToken": true,
+      "layers": [
+        "MODIS_Terra_CorrectedReflectance_TrueColor",
+        "MODIS_Aqua_CorrectedReflectance_TrueColor",
+        "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+        "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+        "VIIRS_SNPP_DayNightBand_At_Sensor_Radiance",
+        "BlueMarble_NextGeneration"
+      ]
+    },
+    "modis_terra": {
+      "name": "MODIS Terra",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "MODIS_Terra_CorrectedReflectance_Bands721",
+        "MODIS_Terra_CorrectedReflectance_Bands367",
+        "MODIS_Terra_Aerosol",
+        "MODIS_Terra_Land_Surface_Temp_Day",
+        "MODIS_Terra_Land_Surface_Temp_Night",
+        "MODIS_Terra_Snow_Cover"
+      ]
+    },
+    "modis_aqua": {
+      "name": "MODIS Aqua",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "MODIS_Aqua_CorrectedReflectance_Bands721",
+        "MODIS_Aqua_Aerosol",
+        "MODIS_Aqua_Land_Surface_Temp_Day",
+        "MODIS_Aqua_Sea_Ice"
+      ]
+    },
+    "viirs_snpp": {
+      "name": "VIIRS SNPP",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1",
+        "VIIRS_SNPP_CorrectedReflectance_BandsM3-I3-M11",
+        "VIIRS_SNPP_DayNightBand",
+        "VIIRS_SNPP_Thermal_Anomalies_375m_All"
+      ]
+    },
+    "airs": {
+      "name": "AIRS Atmospheric",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "AIRS_L2_Carbon_Monoxide_500hPa_Volume_Mixing_Ratio_Day",
+        "AIRS_L2_Surface_Air_Temperature_Day",
+        "AIRS_L2_Surface_Relative_Humidity_Day"
+      ]
+    },
+    "omi": {
+      "name": "OMI Chemistry",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "OMI_Aerosol_Index",
+        "OMI_Nitrogen_Dioxide_Tropo_Column",
+        "OMI_SO2_Planetary_Boundary_Layer",
+        "OMI_Ozone_TOMS_Total_Column"
+      ]
+    },
+    "smap": {
+      "name": "SMAP Soil",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "SMAP_L3_Passive_Enhanced_Day_Soil_Moisture",
+        "SMAP_L4_Analyzed_Surface_Soil_Moisture"
+      ]
+    },
+    "gpm": {
+      "name": "GPM Precipitation",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "IMERG_Precipitation_Rate",
+        "GPM_Precipitation_Rate_Asc"
+      ]
+    },
+    "ghrsst": {
+      "name": "Ocean Temperature",
+      "featured": false,
+      "needsToken": true,
+      "layers": [
+        "GHRSST_L4_MUR_Sea_Surface_Temperature",
+        "GHRSST_L4_MUR_Sea_Ice_Concentration"
+      ]
+    }
+  }
+}

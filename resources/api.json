@@ -1,0 +1,180 @@
+{
+  "categories": {},
+  "layerTypes": {
+    "MODIS": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
+      "maxZoom": 9,
+      "needsToken": true
+    },
+    "VIIRS": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": true
+    },
+    "AIRS": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "SMAP": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "OMI": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "OMPS": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "GPM": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "IMERG": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "TRMM": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "GHRSST": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.png",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "OCO": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "maxZoom": 6,
+      "needsToken": true
+    },
+    "TEMPO": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png",
+      "maxZoom": 8,
+      "needsToken": true
+    },
+    "PACE": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png",
+      "maxZoom": 7,
+      "needsToken": true
+    },
+    "OCI": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png",
+      "maxZoom": 7,
+      "needsToken": true
+    },
+    "HARP2": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png",
+      "maxZoom": 7,
+      "needsToken": true
+    },
+    "SPEXONE": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png",
+      "maxZoom": 7,
+      "needsToken": true
+    },
+    "OPERA": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": true
+    },
+    "GOES": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.jpg",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "Himawari": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.jpg",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "CERES": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.png",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "MERRA2": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.png",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "GRACE": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level5/{z}/{y}/{x}.png",
+      "maxZoom": 5,
+      "needsToken": true
+    },
+    "GEDI": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png",
+      "maxZoom": 8,
+      "needsToken": true
+    },
+    "BlueMarble": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg",
+      "maxZoom": 8,
+      "needsToken": false
+    },
+    "Coastlines": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": false
+    },
+    "Reference": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": false
+    },
+    "Moon": {
+      "baseUrl": "https://trek.nasa.gov/tiles/Moon/EQ",
+      "pathTemplate": "{layer}/1.0.0/default/default028mm/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": false
+    },
+    "Mars": {
+      "baseUrl": "https://trek.nasa.gov/tiles/Mars/EQ",
+      "pathTemplate": "{layer}/1.0.0/default/default028mm/{z}/{y}/{x}.png",
+      "maxZoom": 9,
+      "needsToken": false
+    },
+
+    "DEFAULT": {
+      "baseUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best",
+      "pathTemplate": "{layer}/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
+      "maxZoom": 6,
+      "needsToken": true
+    }
+  }
+}
